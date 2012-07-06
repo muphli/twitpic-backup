@@ -31,17 +31,21 @@
 	$response = json_decode(file_get_contents("http://api.twitpic.com/2/users/show.json?username=" . $username));
 	$imageCounter = $response->photo_count;
 	$pageCounter = ceil(($imageCounter)/20);
-		
-	//create destination-folder
+	
 	if (isset($foldername)){
-		mkdir($foldername);
-		$path = $foldername;
-		
+		$path = getcwd() . '/' . $foldername;
 	}
-	else {
-		$path = "twitpic-backup_" . $username;
-		mkdir($path);		
-	} 
+	else $path = getcwd() . '/' . 'twitpic-backup_' . $username;
+		
+	//delete old folder if exists
+	if (is_dir(getcwd() . '/' .  $foldername)){
+			$filesInDir = glob($path . '/*');
+			foreach ($filesInDir as $file){
+				unlink($file);
+			}
+		rmdir($path);
+	}
+	mkdir($path);
 	
 	//print total number of images
 	echo "\n@" . $username . " uploaded " . $imageCounter. " images to TwitPic.\n";
