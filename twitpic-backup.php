@@ -40,7 +40,7 @@
 		else $path = getcwd() . '/' . 'twitpic-backup_' . $username;
 			
 		//delete old folder if exists
-		if (is_dir(getcwd() . '/' .  $foldername)){
+		if (is_dir($path)){
 				$filesInDir = glob($path . '/*');
 				foreach ($filesInDir as $file){
 					unlink($file);
@@ -96,7 +96,7 @@
 	
   	}
   	
-  	else echo "Argument 'username' is missing. Please call this file as follows: php twitpic-backup.php username [destination-folder]."
+  	else echo "\nArgument 'username' is missing.\nPlease call this file as follows: php twitpic-backup.php username [destination-folder]."
   	
 ?> 
 	
